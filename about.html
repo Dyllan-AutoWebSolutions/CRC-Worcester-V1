@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="About CRC Worcester — part of the Christian Revival Church family. Discover our story, our vision, and the people behind the church.">
+  <title>About · CRC Worcester</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+
+  <style>
+    /* ── ABOUT PAGE SPECIFIC ─────────────────────────────────── */
+
+    /* Story section two-column */
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .story-text p {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.85;
+      margin-bottom: 20px;
+    }
+
+    .story-text p:last-child { margin-bottom: 0; }
+
+    .story-quote {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-left: 3px solid var(--red);
+      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+      padding: 40px;
+      position: relative;
+    }
+
+    .story-quote::before {
+      content: '\201C';
+      font-family: var(--font-primary);
+      font-size: 6rem;
+      font-weight: 900;
+      color: var(--red);
+      opacity: 0.2;
+      position: absolute;
+      top: -10px;
+      left: 24px;
+      line-height: 1;
+    }
+
+    .story-quote blockquote {
+      font-family: var(--font-primary);
+      font-weight: 300;
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      line-height: 1.7;
+      color: rgba(255,255,255,0.8);
+      font-style: italic;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .story-quote cite {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--red);
+      font-style: normal;
+    }
+
+    /* Pillars — mission vision values */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 2px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .pillar {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      padding: 48px 36px;
+      position: relative;
+      overflow: hidden;
+      transition: background var(--transition);
+    }
+
+    .pillar:hover { background: rgba(255,255,255,0.06); }
+
+    .pillar::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+
+    .pillar-mission::before { background: var(--red); }
+    .pillar-vision::before  { background: var(--purple); }
+    .pillar-values::before  { background: var(--blue); }
+
+    .pillar-number {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: 3.5rem;
+      line-height: 1;
+      margin-bottom: 20px;
+      opacity: 0.08;
+    }
+
+    .pillar-mission .pillar-number { color: var(--red); }
+    .pillar-vision  .pillar-number { color: var(--purple); }
+    .pillar-values  .pillar-number { color: var(--blue); }
+
+    .pillar-label {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .pillar-mission .pillar-label { color: var(--red); }
+    .pillar-vision  .pillar-label { color: var(--purple); }
+    .pillar-values  .pillar-label { color: var(--blue); }
+
+    .pillar h3 {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: 1.4rem;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .pillar p {
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.75;
+    }
+
+    /* Pastor feature block */
+    .pastor-block {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 64px;
+      align-items: center;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .pastor-photo {
+      aspect-ratio: 3/4;
+      background: rgba(255,255,255,0.06);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: rgba(255,255,255,0.2);
+      font-family: var(--font-primary);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pastor-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+    }
+
+    .pastor-photo-placeholder {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: rgba(216,12,55,0.15);
+      border: 1.5px solid rgba(216,12,55,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+      margin-bottom: 4px;
+    }
+
+    .pastor-info {
+      padding: 48px 48px 48px 0;
+    }
+
+    .pastor-tag {
+      display: inline-block;
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--red);
+      background: var(--red-light);
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      margin-bottom: 16px;
+    }
+
+    .pastor-name {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .pastor-title {
+      font-family: var(--font-primary);
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 28px;
+    }
+
+    .pastor-bio p {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.62);
+      line-height: 1.85;
+      margin-bottom: 16px;
+    }
+
+    .pastor-bio p:last-child { margin-bottom: 0; }
+
+    /* Local pastor placeholder card */
+    .local-pastor-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px dashed rgba(255,255,255,0.12);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .local-pastor-avatar {
+      width: 96px; height: 96px;
+      border-radius: 50%;
+      background: rgba(216,12,55,0.08);
+      border: 2px dashed rgba(216,12,55,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.5rem;
+    }
+
+    .local-pastor-card h3 {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: 1.3rem;
+    }
+
+    .local-pastor-card p {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.45);
+      max-width: 320px;
+      line-height: 1.7;
+    }
+
+    /* Network section */
+    .network-section {
+      background: rgba(255,255,255,0.02);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .network-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .network-copy p {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.85;
+      margin-bottom: 16px;
+    }
+
+    .network-copy p:last-child { margin-bottom: 0; }
+
+    .network-locations {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .location-pill {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: border-color var(--transition), background var(--transition);
+    }
+
+    .location-pill:hover {
+      border-color: rgba(216,12,55,0.3);
+      background: rgba(216,12,55,0.05);
+    }
+
+    .location-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--red);
+      flex-shrink: 0;
+    }
+
+    .location-pill span {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+    }
+
+    .location-pill.highlight {
+      border-color: rgba(216,12,55,0.4);
+      background: rgba(216,12,55,0.08);
+    }
+
+    .location-pill.highlight .location-dot {
+      box-shadow: 0 0 0 3px rgba(216,12,55,0.2);
+    }
+
+    /* ── RESPONSIVE ──────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .story-grid      { grid-template-columns: 1fr; gap: 40px; }
+      .pillars-grid    { grid-template-columns: 1fr; }
+      .pastor-block    { grid-template-columns: 1fr; }
+      .pastor-photo    { aspect-ratio: 16/9; }
+      .pastor-info     { padding: 0 28px 36px; }
+      .network-grid    { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    @media (max-width: 480px) {
+      .network-locations { grid-template-columns: 1fr; }
+      .local-pastor-card { padding: 32px 24px; }
+      .pillar            { padding: 36px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────────────────────────── -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-badge">CRC</div>
+      CRC Worcester
+    </a>
+    <ul class="nav-links">
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="sermons.html">Sermons</a></li>
+      <li><a href="ministries.html">Ministries</a></li>
+      <li><a href="homecell.html">Homecell</a></li>
+      <li><a href="connect.html">Connect</a></li>
+    </ul>
+    <a href="connect.html" class="btn btn-primary" id="nav-cta" style="display:none;">Plan a Visit</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── MOBILE MENU ──────────────────────────────────────────── -->
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Navigation menu">
+  <a href="about.html"      onclick="closeMobileMenu()" class="active">About</a>
+  <a href="sermons.html"    onclick="closeMobileMenu()">Sermons</a>
+  <a href="ministries.html" onclick="closeMobileMenu()">Ministries</a>
+  <a href="homecell.html"   onclick="closeMobileMenu()">Homecell</a>
+  <a href="connect.html"    onclick="closeMobileMenu()">Connect</a>
+  <a href="connect.html"    onclick="closeMobileMenu()" class="cta-link">Plan a Visit →</a>
+</div>
+
+<!-- ── PAGE HERO ────────────────────────────────────────────── -->
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="container page-hero-content">
+    <div class="hero-eyebrow" style="animation: fadeUp 0.7s ease 0.1s both;">
+      Christian Revival Church
+    </div>
+    <h1 class="section-title reveal" style="font-size:clamp(2.4rem,6vw,4.2rem); max-width:700px;">
+      One church.<br>Many locations.<br><span style="color:var(--red);">One mission.</span>
+    </h1>
+    <p class="section-sub reveal reveal-delay-1">
+      CRC Worcester is part of a global movement of churches fuelled by the love of God and driven by one purpose — to win the lost at any cost.
+    </p>
+  </div>
+</section>
+
+<!-- ── OUR STORY ─────────────────────────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="story-grid">
+      <div class="story-text reveal">
+        <div class="section-label">Our Story</div>
+        <h2 class="section-title">Where it all began.</h2>
+        <p>Christian Revival Church was founded by Pastor At Boshoff with a single, burning conviction — that the local church is the hope of the world. What started as one congregation grew into a family of churches spanning South Africa and beyond, each one rooted in the same vision: building one church in many locations.</p>
+        <p>The heart of CRC has never changed. It is a church that goes after people — the lost, the broken, the searching. A church that believes love is not just a feeling but a force that can invade communities and change them from the inside out.</p>
+        <p>CRC Worcester carries that same DNA into the Boland. We are not just another church in Worcester — we are part of a wave of love that is touching cities across the nation, and we believe the best is still ahead.</p>
+      </div>
+      <div class="story-quote reveal reveal-delay-1">
+        <blockquote>"We are building one church in many locations — a church that wins the lost at any cost, mends the nets, and releases every member for ministry."</blockquote>
+        <cite>CRC Vision Statement</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MISSION · VISION · VALUES ────────────────────────────── -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div style="text-align:center; margin-bottom:48px;" class="reveal">
+      <div class="section-label">What drives us</div>
+      <h2 class="section-title">Mission. Vision. Values.</h2>
+    </div>
+    <div class="pillars-grid">
+
+      <div class="pillar pillar-mission reveal">
+        <div class="pillar-number">01</div>
+        <div class="pillar-label">Mission</div>
+        <h3>To win the lost at any cost.</h3>
+        <p>This is not a slogan — it is a way of life. We exist to reach people who are far from God and bring them into a living relationship with Jesus Christ. Every service, every homecell, every act of kindness is an expression of this mission.</p>
+      </div>
+
+      <div class="pillar pillar-vision reveal reveal-delay-1">
+        <div class="pillar-number">02</div>
+        <div class="pillar-label">Vision</div>
+        <h3>Building one church in many locations.</h3>
+        <p>We are not a collection of independent congregations — we are one church, expressed in many cities and communities. CRC Worcester is one expression of that vision in the Boland, connected to a global family that believes together we do more.</p>
+      </div>
+
+      <div class="pillar pillar-values reveal reveal-delay-2">
+        <div class="pillar-number">03</div>
+        <div class="pillar-label">Values</div>
+        <h3>Fuelled by the love of God.</h3>
+        <p>Love is not one of our values — it is the engine of everything we do. We train and release every member for ministry, care for our community, evangelise the lost, and disciple those who believe. An outreach into new territory, every single week.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── SCRIPTURE ─────────────────────────────────────────────── -->
+<div class="container">
+  <div class="scripture reveal">
+    <blockquote>"A new command I give you: Love one another. As I have loved you, so you must love one another. By this everyone will know that you are my disciples, if you love one another."</blockquote>
+    <cite>John 13:34–35</cite>
+  </div>
+</div>
+
+<!-- ── PASTOR AT BOSHOFF ─────────────────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div style="margin-bottom:48px;" class="reveal">
+      <div class="section-label">Founding Senior Pastor</div>
+      <h2 class="section-title">The voice behind the movement.</h2>
+    </div>
+    <div class="pastor-block reveal">
+      <div class="pastor-photo">
+        <!-- [TBC] Replace with Pastor At Boshoff photo -->
+        <!-- <img src="assets/images/pastor-at-boshoff.jpg" alt="Pastor At Boshoff"> -->
+        <div class="pastor-photo-placeholder">👤</div>
+        <span>Pastor At Boshoff</span>
+      </div>
+      <div class="pastor-info">
+        <div class="pastor-tag">Founding Senior Pastor · CRC Church</div>
+        <h3 class="pastor-name">Pastor At Boshoff</h3>
+        <p class="pastor-title">Senior Pastor &amp; Founder, Christian Revival Church</p>
+        <div class="pastor-bio">
+          <p>Pastor At Boshoff is the founding senior pastor of Christian Revival Church and the central voice of the CRC movement. His life's mission is simple and uncompromising — to win the lost at any cost. Under his leadership, CRC has grown from a single congregation into a family of churches planted across South Africa and internationally.</p>
+          <p>Pastor At's teaching is bold, practical, and always anchored in Scripture. His mandate — to mend the nets, train every member, and release them into ministry — has shaped the DNA of every CRC campus, including Worcester. His vision of "one church in many locations" is not just an organisational strategy; it is a spiritual conviction that the local church, when it moves in unity, can change nations.</p>
+          <p>Every CRC campus, including Worcester, is an extension of that vision. We carry his mandate into our city with the same fire, the same love, and the same belief that the best is still ahead.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── LOCAL PASTOR ───────────────────────────────────────────── -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="grid-2" style="gap:40px; align-items:start;">
+      <div class="reveal">
+        <div class="section-label">CRC Worcester</div>
+        <h2 class="section-title">Our local leadership.</h2>
+        <p style="color:rgba(255,255,255,0.6); line-height:1.8; font-size:0.95rem;">Every CRC campus is led by a local pastor who carries the vision of the movement into their city. In Worcester, that leadership is what connects the global heart of CRC to the streets, families, and communities of the Boland.</p>
+      </div>
+      <div class="local-pastor-card reveal reveal-delay-1">
+        <div class="local-pastor-avatar">👤</div>
+        <!-- [TBC] Replace name, title and bio when confirmed -->
+        <h3>[Pastor Name]</h3>
+        <div class="pastor-tag" style="margin:0;">Campus Pastor · CRC Worcester</div>
+        <p>Details for our local campus pastor are coming soon. We can't wait to introduce you to the person leading CRC Worcester.</p>
+        <a href="connect.html" class="btn btn-primary" style="margin-top:8px;">Get in Touch</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CRC NETWORK ────────────────────────────────────────────── -->
+<section class="section network-section">
+  <div class="container">
+    <div class="network-grid">
+      <div class="network-copy reveal">
+        <div class="section-label">The CRC Family</div>
+        <h2 class="section-title">Part of something bigger.</h2>
+        <p>CRC Worcester is one location in a growing network of churches across South Africa and beyond. We share the same vision, the same values, and the same fire — but we are rooted right here in Worcester, serving this city with everything we have.</p>
+        <p>Being part of the CRC family means access to world-class teaching, shared resources, and a community that stretches further than any one city. When you join CRC Worcester, you join a movement.</p>
+        <a href="https://crcchurch.com" target="_blank" rel="noopener" class="btn btn-outline" style="margin-top:12px;">Visit CRC Main →</a>
+      </div>
+      <div class="network-locations reveal reveal-delay-1">
+        <div class="location-pill highlight">
+          <div class="location-dot"></div>
+          <span>Worcester <span style="color:var(--red); font-size:0.65rem;">· You are here</span></span>
+        </div>
+        <div class="location-pill">
+          <div class="location-dot"></div>
+          <span>Pretoria</span>
+        </div>
+        <div class="location-pill">
+          <div class="location-dot"></div>
+          <span>Cape Town</span>
+        </div>
+        <div class="location-pill">
+          <div class="location-dot"></div>
+          <span>George</span>
+        </div>
+        <div class="location-pill">
+          <div class="location-dot"></div>
+          <span>Potchefstroom</span>
+        </div>
+        <div class="location-pill">
+          <div class="location-dot"></div>
+          <span>Kimberley</span>
+        </div>
+        <div class="location-pill" style="border-style:dashed; opacity:0.5;">
+          <div class="location-dot" style="background:rgba(255,255,255,0.3);"></div>
+          <span style="color:rgba(255,255,255,0.4);">& more growing</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONNECT CTA ────────────────────────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="connect-banner reveal">
+      <div class="section-label" style="display:block; margin-bottom:16px;">Come as you are</div>
+      <h2>This is your invitation.</h2>
+      <p>You don't need to have it all together. You don't need to know all the answers. You just need to show up — and we'll take it from there.</p>
+      <div class="connect-banner-btns">
+        <a href="connect.html" class="btn btn-primary">Plan a Visit</a>
+        <a href="sermons.html" class="btn btn-outline">Listen First →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+          <div class="nav-logo-badge">CRC</div>
+          <span style="font-family:var(--font-primary); font-weight:900; font-size:1rem;">CRC Worcester</span>
+        </div>
+        <p>Fuelled by the love of God.<br>Winning the lost at any cost.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-icon" aria-label="YouTube">YT</a>
+          <a href="#" class="social-icon" aria-label="Facebook">FB</a>
+          <a href="#" class="social-icon" aria-label="Instagram">IG</a>
+          <a href="#" class="social-icon" aria-label="Spotify">SP</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Navigate</div>
+        <ul class="footer-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="sermons.html">Sermons</a></li>
+          <li><a href="ministries.html">Ministries</a></li>
+          <li><a href="homecell.html">Homecell</a></li>
+          <li><a href="connect.html">Connect</a></li>
+          <li><a href="events.html">Events</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Ministries</div>
+        <ul class="footer-links">
+          <li><a href="ministries.html#kids">CRC Kids</a></li>
+          <li><a href="ministries.html#youth">CRC Youth</a></li>
+          <li><a href="ministries.html#women">CRC Women</a></li>
+          <li><a href="ministries.html#music">CRC Music</a></li>
+          <li><a href="ministries.html#cares">CRC Cares</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Visit Us</div>
+        <ul class="footer-links">
+          <li><a>Sunday 08:00 &amp; 10:00</a></li>
+          <li><a>Wednesday 18:30</a></li>
+          <li><a>Worcester, Western Cape</a></li>
+          <li><a href="mailto:info@crcworcester.co.za">info@crcworcester.co.za</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 CRC Worcester. All rights reserved.</span>
+      <span style="color:rgba(255,255,255,0.15);">Built by AutoWeb Solutions</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ── SCRIPTS ────────────────────────────────────────────────── -->
+<script type="module" src="js/main.js"></script>
+
+</body>
+</html>

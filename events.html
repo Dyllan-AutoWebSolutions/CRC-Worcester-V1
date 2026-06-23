@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Upcoming events at CRC Worcester — services, conferences, youth nights and more.">
+  <title>Events · CRC Worcester</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+
+  <style>
+    /* ── EVENTS PAGE ─────────────────────────────────────────── */
+
+    /* Regular events strip */
+    .regular-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 20px;
+    }
+
+    .regular-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color var(--transition), background var(--transition);
+    }
+
+    .regular-card:hover {
+      border-color: rgba(216,12,55,0.25);
+      background: rgba(216,12,55,0.04);
+    }
+
+    .regular-day {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+
+    .regular-card h3 {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: 1.15rem;
+      line-height: 1.2;
+    }
+
+    .regular-time {
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: 1.6rem;
+      color: var(--white);
+    }
+
+    .regular-card p {
+      font-size: 0.83rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    /* Featured event */
+    .featured-event {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+    }
+
+    .featured-event-visual {
+      position: relative;
+      min-height: 360px;
+      background:
+        radial-gradient(ellipse 100% 100% at 50% 50%, rgba(216,12,55,0.4) 0%, rgba(161,21,156,0.25) 40%, transparent 70%),
+        linear-gradient(135deg, rgba(216,12,55,0.2), rgba(1,0,39,0.98));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 36px;
+      text-align: center;
+    }
+
+    .event-date-badge {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      background: var(--red);
+      border-radius: var(--radius-md);
+      padding: 12px 24px;
+      margin-bottom: 24px;
+    }
+
+    .event-date-badge .month {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+
+    .event-date-badge .day {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: 2.4rem;
+      line-height: 1;
+    }
+
+    .featured-event-title {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      line-height: 1.1;
+      position: relative;
+      z-index: 1;
+    }
+
+    .featured-event-subtitle {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-top: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .featured-event-info {
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-left: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .featured-event-info p {
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.58);
+      line-height: 1.85;
+      margin-bottom: 16px;
+    }
+
+    .featured-event-info p:last-of-type { margin-bottom: 28px; }
+
+    .event-detail-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-bottom: 32px;
+    }
+
+    .event-detail-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.85rem;
+    }
+
+    .event-detail-row:last-child { border-bottom: none; }
+
+    .event-detail-icon { font-size: 1rem; flex-shrink: 0; width: 20px; text-align: center; }
+
+    .event-detail-label {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      width: 70px;
+      flex-shrink: 0;
+    }
+
+    .event-detail-value {
+      color: rgba(255,255,255,0.75);
+    }
+
+    /* Upcoming events list */
+    .event-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .event-list-item {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-md);
+      padding: 24px 28px;
+      display: grid;
+      grid-template-columns: 72px 1fr auto;
+      gap: 24px;
+      align-items: center;
+      transition: border-color var(--transition), background var(--transition);
+    }
+
+    .event-list-item:hover {
+      border-color: rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .event-list-date {
+      text-align: center;
+      padding: 10px 8px;
+      background: var(--red-light);
+      border: 1px solid rgba(216,12,55,0.2);
+      border-radius: var(--radius-sm);
+    }
+
+    .event-list-date .eld-month {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 0.55rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+
+    .event-list-date .eld-day {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: 1.5rem;
+      line-height: 1;
+      color: var(--white);
+    }
+
+    .event-list-info h4 {
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: 0.98rem;
+      margin-bottom: 4px;
+    }
+
+    .event-list-info p {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .event-list-badge {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--red-light);
+      color: var(--red);
+      white-space: nowrap;
+    }
+
+    /* Empty state */
+    .events-empty {
+      background: rgba(255,255,255,0.02);
+      border: 1px dashed rgba(255,255,255,0.1);
+      border-radius: var(--radius-lg);
+      padding: 64px 48px;
+      text-align: center;
+    }
+
+    .events-empty h3 {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+    }
+
+    .events-empty p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.4);
+      max-width: 400px;
+      margin: 0 auto 28px;
+      line-height: 1.75;
+    }
+
+    /* ── RESPONSIVE ──────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .regular-grid          { grid-template-columns: 1fr; }
+      .featured-event        { grid-template-columns: 1fr; }
+      .featured-event-visual { min-height: 280px; }
+      .featured-event-info   { padding: 36px 28px; border-left: none; border-top: 1px solid rgba(255,255,255,0.06); }
+      .event-list-item       { grid-template-columns: 60px 1fr; }
+      .event-list-badge      { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .events-empty { padding: 48px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────────────────────────── -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-badge">CRC</div>
+      CRC Worcester
+    </a>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="sermons.html">Sermons</a></li>
+      <li><a href="ministries.html">Ministries</a></li>
+      <li><a href="homecell.html">Homecell</a></li>
+      <li><a href="connect.html">Connect</a></li>
+    </ul>
+    <a href="connect.html" class="btn btn-primary" id="nav-cta" style="display:none;">Plan a Visit</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── MOBILE MENU ──────────────────────────────────────────── -->
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Navigation menu">
+  <a href="about.html"      onclick="closeMobileMenu()">About</a>
+  <a href="sermons.html"    onclick="closeMobileMenu()">Sermons</a>
+  <a href="ministries.html" onclick="closeMobileMenu()">Ministries</a>
+  <a href="homecell.html"   onclick="closeMobileMenu()">Homecell</a>
+  <a href="connect.html"    onclick="closeMobileMenu()">Connect</a>
+  <a href="connect.html"    onclick="closeMobileMenu()" class="cta-link">Plan a Visit →</a>
+</div>
+
+<!-- ── PAGE HERO ────────────────────────────────────────────── -->
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="container page-hero-content">
+    <div class="hero-eyebrow" style="animation: fadeUp 0.7s ease 0.1s both;">What's On</div>
+    <h1 class="section-title reveal" style="font-size:clamp(2.4rem,6vw,4.2rem); max-width:680px;">
+      Don't miss what<br>God is doing in <span style="color:var(--red);">Worcester.</span>
+    </h1>
+    <p class="section-sub reveal reveal-delay-1">
+      From Sunday services to special events — here's everything coming up at CRC Worcester.
+    </p>
+  </div>
+</section>
+
+<!-- ── REGULAR SERVICES ──────────────────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">Every Week</div>
+    <h2 class="section-title" style="margin-bottom:40px;">Our regular services.</h2>
+    <div class="regular-grid">
+      <div class="regular-card reveal">
+        <div class="regular-day">Sunday</div>
+        <h3>Morning Service</h3>
+        <div class="regular-time">08:00</div>
+        <p>Our first Sunday service. Includes Kids Church running parallel for ages 2–12. Come as you are — doors open from 07:30.</p>
+        <a href="connect.html" class="btn btn-outline" style="font-size:0.7rem; padding:10px 18px; margin-top:auto;">Get Directions →</a>
+      </div>
+      <div class="regular-card reveal reveal-delay-1">
+        <div class="regular-day">Sunday</div>
+        <h3>Morning Service</h3>
+        <div class="regular-time">10:00</div>
+        <p>Our second Sunday service — same message, same energy. Kids Church also runs at this service. Doors open from 09:30.</p>
+        <a href="connect.html" class="btn btn-outline" style="font-size:0.7rem; padding:10px 18px; margin-top:auto;">Get Directions →</a>
+      </div>
+      <div class="regular-card reveal reveal-delay-2">
+        <div class="regular-day">Wednesday</div>
+        <h3>Midweek Service</h3>
+        <div class="regular-time">18:30</div>
+        <p>A midweek encounter to keep you rooted and growing through the week. Practical, powerful, and worth showing up for.</p>
+        <a href="connect.html" class="btn btn-outline" style="font-size:0.7rem; padding:10px 18px; margin-top:auto;">Get Directions →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURED UPCOMING EVENT ───────────────────────────────── -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-label">Featured Event</div>
+    <h2 class="section-title" style="margin-bottom:32px;">Coming up next.</h2>
+    <!-- [TBC] Replace this entire block with the real next event when confirmed -->
+    <div class="featured-event reveal">
+      <div class="featured-event-visual">
+        <div class="event-date-badge">
+          <span class="month">[Month]</span>
+          <span class="day">[00]</span>
+        </div>
+        <div class="featured-event-title">[Event Name]</div>
+        <div class="featured-event-subtitle">[Event tagline or theme]</div>
+      </div>
+      <div class="featured-event-info">
+        <div class="card-badge" style="width:fit-content; margin-bottom:20px;">[Event Type — e.g. Conference / Youth Night]</div>
+        <p>Details for our next featured event are being finalised. Check back soon or follow us on social media to be the first to know when tickets and information drop.</p>
+        <div class="event-detail-rows">
+          <div class="event-detail-row">
+            <span class="event-detail-icon">📅</span>
+            <span class="event-detail-label">Date</span>
+            <span class="event-detail-value">[Date TBC]</span>
+          </div>
+          <div class="event-detail-row">
+            <span class="event-detail-icon">🕐</span>
+            <span class="event-detail-label">Time</span>
+            <span class="event-detail-value">[Time TBC]</span>
+          </div>
+          <div class="event-detail-row">
+            <span class="event-detail-icon">📍</span>
+            <span class="event-detail-label">Venue</span>
+            <span class="event-detail-value">CRC Worcester</span>
+          </div>
+          <div class="event-detail-row">
+            <span class="event-detail-icon">🎟</span>
+            <span class="event-detail-label">Entry</span>
+            <span class="event-detail-value">[Free / Ticketed TBC]</span>
+          </div>
+        </div>
+        <a href="connect.html" class="btn btn-primary">Register Your Interest →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── UPCOMING EVENTS LIST ──────────────────────────────────── -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-label">All Upcoming</div>
+    <h2 class="section-title" style="margin-bottom:32px;">What's in the calendar.</h2>
+
+    <!-- [TBC] Replace placeholder items with real events as they are confirmed -->
+    <!-- EXAMPLE of how to add an event:
+    <div class="event-list-item reveal">
+      <div class="event-list-date">
+        <div class="eld-month">Jul</div>
+        <div class="eld-day">12</div>
+      </div>
+      <div class="event-list-info">
+        <h4>Youth Night — Unashamed</h4>
+        <p>Friday · 18:00 · CRC Worcester</p>
+      </div>
+      <div class="event-list-badge">Youth</div>
+    </div>
+    -->
+
+    <div class="events-empty reveal">
+      <h3>More events coming soon.</h3>
+      <p>We're busy planning what's next. Follow us on social media or check back here to stay in the loop — you won't want to miss what's coming.</p>
+      <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+        <!-- [TBC] Update social links -->
+        <a href="#" class="btn btn-primary">Follow on Facebook</a>
+        <a href="#" class="btn btn-outline">Follow on Instagram</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── CONNECT CTA ────────────────────────────────────────────── -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="connect-banner reveal">
+      <div class="section-label" style="display:block; margin-bottom:16px;">This Sunday</div>
+      <h2>The best event<br>is this Sunday's service.</h2>
+      <p>You don't have to wait for a special event to experience CRC Worcester. Every Sunday is an opportunity to encounter God and find your people.</p>
+      <div class="connect-banner-btns">
+        <a href="connect.html" class="btn btn-primary">Plan a Visit</a>
+        <a href="sermons.html" class="btn btn-outline">Listen to Sermons →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+          <div class="nav-logo-badge">CRC</div>
+          <span style="font-family:var(--font-primary); font-weight:900; font-size:1rem;">CRC Worcester</span>
+        </div>
+        <p>Fuelled by the love of God.<br>Winning the lost at any cost.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-icon" aria-label="YouTube">YT</a>
+          <a href="#" class="social-icon" aria-label="Facebook">FB</a>
+          <a href="#" class="social-icon" aria-label="Instagram">IG</a>
+          <a href="#" class="social-icon" aria-label="Spotify">SP</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Navigate</div>
+        <ul class="footer-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="sermons.html">Sermons</a></li>
+          <li><a href="ministries.html">Ministries</a></li>
+          <li><a href="homecell.html">Homecell</a></li>
+          <li><a href="connect.html">Connect</a></li>
+          <li><a href="events.html">Events</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Ministries</div>
+        <ul class="footer-links">
+          <li><a href="ministries.html#kids">CRC Kids</a></li>
+          <li><a href="ministries.html#youth">CRC Youth</a></li>
+          <li><a href="ministries.html#women">CRC Women</a></li>
+          <li><a href="ministries.html#music">CRC Music</a></li>
+          <li><a href="ministries.html#cares">CRC Cares</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Visit Us</div>
+        <ul class="footer-links">
+          <li><a>Sunday 08:00 &amp; 10:00</a></li>
+          <li><a>Wednesday 18:30</a></li>
+          <li><a>Worcester, Western Cape</a></li>
+          <li><a href="mailto:info@crcworcester.co.za">info@crcworcester.co.za</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 CRC Worcester. All rights reserved.</span>
+      <span style="color:rgba(255,255,255,0.15);">Built by AutoWeb Solutions</span>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="js/main.js"></script>
+
+</body>
+</html>

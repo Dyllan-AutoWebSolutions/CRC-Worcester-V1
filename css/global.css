@@ -1,0 +1,171 @@
+/* ============================================================
+   CRC WORCESTER — global.css
+   Design tokens · Reset · Typography · Layout utilities
+   ============================================================ */
+
+:root {
+  /* Brand colours */
+  --navy:       #010027;
+  --red:        #D80C37;
+  --purple:     #A1159C;
+  --orange:     #FF8000;
+  --yellow:     #F5D01B;
+  --blue:       #5CB2ED;
+  --white:      #FFFFFF;
+  --black:      #000000;
+
+  /* Tints */
+  --navy-80:    rgba(1,0,39,0.8);
+  --red-light:  rgba(216,12,55,0.12);
+
+  /* Ministry spot colours */
+  --kids-bg:      rgba(245,208,27,0.15);
+  --kids-text:    var(--yellow);
+  --youth-bg:     rgba(255,128,0,0.15);
+  --youth-text:   var(--orange);
+  --outreach-bg:  rgba(92,178,237,0.15);
+  --outreach-text:var(--blue);
+  --worship-bg:   rgba(161,21,156,0.15);
+  --worship-text: var(--purple);
+  --women-bg:     rgba(161,21,156,0.15);
+  --women-text:   #cc88cc;
+
+  /* Typography */
+  --font-primary: 'Montserrat', sans-serif;
+  --font-body:    'Geist', 'Montserrat', sans-serif;
+
+  /* Radius */
+  --radius-sm:   4px;
+  --radius-md:   10px;
+  --radius-lg:   20px;
+  --radius-pill: 999px;
+
+  /* Shadows */
+  --shadow-card: 0 4px 24px rgba(1,0,39,0.18);
+  --shadow-nav:  0 2px 20px rgba(1,0,39,0.3);
+
+  /* Motion */
+  --transition: 0.25s cubic-bezier(0.4,0,0.2,1);
+
+  /* Layout */
+  --max-w:        1180px;
+  --section-gap:  80px;
+}
+
+/* ── RESET ─────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--navy);
+  color: var(--white);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ── LAYOUT UTILITIES ───────────────────────────────────────── */
+.container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section {
+  padding: var(--section-gap) 0;
+}
+
+/* ── TYPE UTILITIES ─────────────────────────────────────────── */
+.section-label {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: var(--font-primary);
+  font-weight: 900;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+.section-sub {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.6);
+  max-width: 520px;
+  line-height: 1.7;
+  margin-bottom: 40px;
+}
+
+/* ── GRID UTILITIES ─────────────────────────────────────────── */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 24px;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 24px;
+}
+
+/* ── SCROLL REVEAL ──────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* ── RESPONSIVE ─────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  :root { --section-gap: 60px; }
+  .grid-2 { grid-template-columns: 1fr; gap: 32px; }
+  .grid-3 { grid-template-columns: 1fr; }
+  .grid-4 { grid-template-columns: repeat(2,1fr); }
+}
+
+@media (max-width: 480px) {
+  .container { padding: 0 16px; }
+  .grid-4    { grid-template-columns: repeat(2,1fr); }
+}

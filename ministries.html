@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CRC Worcester Ministries — Kids, Youth, Women, Music and Cares. There's a place for everyone here.">
+  <title>Ministries · CRC Worcester</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+
+  <style>
+    /* ── MINISTRIES PAGE ─────────────────────────────────────── */
+
+    /* Ministry anchor offset for fixed nav */
+    .ministry-anchor {
+      display: block;
+      height: 88px;
+      margin-top: -88px;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    /* Ministry nav pills */
+    .ministry-nav {
+      position: sticky;
+      top: 68px;
+      z-index: 100;
+      background: rgba(1,0,39,0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 12px 0;
+    }
+
+    .ministry-nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .ministry-nav-inner::-webkit-scrollbar { display: none; }
+
+    .ministry-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.5);
+      cursor: pointer;
+      transition: all var(--transition);
+      white-space: nowrap;
+      text-decoration: none;
+      background: transparent;
+    }
+
+    .ministry-pill:hover,
+    .ministry-pill.active { color: var(--white); border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.06); }
+
+    .ministry-pill-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Ministry block */
+    .ministry-block {
+      padding: 80px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .ministry-block:last-of-type { border-bottom: none; }
+
+    .ministry-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+
+    .ministry-layout.reverse { direction: rtl; }
+    .ministry-layout.reverse > * { direction: ltr; }
+
+    .ministry-photo {
+      aspect-ratio: 4/3;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      color: rgba(255,255,255,0.2);
+      font-family: var(--font-primary);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      position: relative;
+    }
+
+    .ministry-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    .ministry-photo-icon {
+      font-size: 3rem;
+      opacity: 0.3;
+    }
+
+    .ministry-copy .card-badge {
+      margin-bottom: 20px;
+    }
+
+    .ministry-copy h2 {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+
+    .ministry-copy p {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.85;
+      margin-bottom: 16px;
+    }
+
+    .ministry-copy p:last-of-type { margin-bottom: 28px; }
+
+    /* Feature list */
+    .ministry-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+
+    .ministry-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.6;
+    }
+
+    .ministry-features li::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+
+    /* Colour overrides per ministry */
+    #kids    .ministry-photo { background: linear-gradient(135deg, rgba(245,208,27,0.15), rgba(1,0,39,0.9)); }
+    #youth   .ministry-photo { background: linear-gradient(135deg, rgba(255,128,0,0.15), rgba(1,0,39,0.9)); }
+    #women   .ministry-photo { background: linear-gradient(135deg, rgba(161,21,156,0.15), rgba(1,0,39,0.9)); }
+    #music   .ministry-photo { background: linear-gradient(135deg, rgba(216,12,55,0.15), rgba(1,0,39,0.9)); }
+    #cares   .ministry-photo { background: linear-gradient(135deg, rgba(92,178,237,0.15), rgba(1,0,39,0.9)); }
+
+    #kids   .ministry-features li::before { background: var(--yellow); }
+    #youth  .ministry-features li::before { background: var(--orange); }
+    #women  .ministry-features li::before { background: #cc88cc; }
+    #music  .ministry-features li::before { background: var(--red); }
+    #cares  .ministry-features li::before { background: var(--blue); }
+
+    /* Get involved strip */
+    .get-involved {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-lg);
+      padding: 56px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .get-involved h3 {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .get-involved p {
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+
+    .volunteer-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .volunteer-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      transition: border-color var(--transition), background var(--transition);
+    }
+
+    .volunteer-card:hover {
+      border-color: rgba(216,12,55,0.3);
+      background: rgba(216,12,55,0.05);
+    }
+
+    .volunteer-card-icon { font-size: 1.4rem; margin-bottom: 8px; }
+
+    .volunteer-card h4 {
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: 0.85rem;
+      margin-bottom: 4px;
+    }
+
+    .volunteer-card p {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* ── RESPONSIVE ──────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .ministry-layout         { grid-template-columns: 1fr; gap: 36px; }
+      .ministry-layout.reverse { direction: ltr; }
+      .get-involved            { grid-template-columns: 1fr; padding: 36px 28px; }
+      .volunteer-cards         { grid-template-columns: 1fr 1fr; }
+      .ministry-block          { padding: 60px 0; }
+    }
+
+    @media (max-width: 480px) {
+      .volunteer-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────────────────────────── -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-badge">CRC</div>
+      CRC Worcester
+    </a>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="sermons.html">Sermons</a></li>
+      <li><a href="ministries.html" class="active">Ministries</a></li>
+      <li><a href="homecell.html">Homecell</a></li>
+      <li><a href="connect.html">Connect</a></li>
+    </ul>
+    <a href="connect.html" class="btn btn-primary" id="nav-cta" style="display:none;">Plan a Visit</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── MOBILE MENU ──────────────────────────────────────────── -->
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Navigation menu">
+  <a href="about.html"      onclick="closeMobileMenu()">About</a>
+  <a href="sermons.html"    onclick="closeMobileMenu()">Sermons</a>
+  <a href="ministries.html" onclick="closeMobileMenu()" class="active">Ministries</a>
+  <a href="homecell.html"   onclick="closeMobileMenu()">Homecell</a>
+  <a href="connect.html"    onclick="closeMobileMenu()">Connect</a>
+  <a href="connect.html"    onclick="closeMobileMenu()" class="cta-link">Plan a Visit →</a>
+</div>
+
+<!-- ── PAGE HERO ────────────────────────────────────────────── -->
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="container page-hero-content">
+    <div class="hero-eyebrow" style="animation: fadeUp 0.7s ease 0.1s both;">Our Ministries</div>
+    <h1 class="section-title reveal" style="font-size:clamp(2.4rem,6vw,4.2rem); max-width:700px;">
+      There's a place<br>for <span style="color:var(--red);">everyone</span> here.
+    </h1>
+    <p class="section-sub reveal reveal-delay-1">
+      CRC Worcester is more than a Sunday service. It's a family with a place for every age, every stage, and every calling.
+    </p>
+  </div>
+</section>
+
+<!-- ── MINISTRY QUICK NAV ────────────────────────────────────── -->
+<div class="ministry-nav" aria-label="Jump to ministry">
+  <div class="ministry-nav-inner">
+    <a href="#kids"  class="ministry-pill"><span class="ministry-pill-dot" style="background:var(--yellow);"></span>CRC Kids</a>
+    <a href="#youth" class="ministry-pill"><span class="ministry-pill-dot" style="background:var(--orange);"></span>CRC Youth</a>
+    <a href="#women" class="ministry-pill"><span class="ministry-pill-dot" style="background:#cc88cc;"></span>CRC Women</a>
+    <a href="#music" class="ministry-pill"><span class="ministry-pill-dot" style="background:var(--red);"></span>CRC Music</a>
+    <a href="#cares" class="ministry-pill"><span class="ministry-pill-dot" style="background:var(--blue);"></span>CRC Cares</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- ── CRC KIDS ─────────────────────────────────────────────── -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div id="kids">
+  <span class="ministry-anchor"></span>
+  <div class="ministry-block">
+    <div class="container">
+      <div class="ministry-layout reveal">
+        <div class="ministry-photo">
+          <!-- [TBC] Replace with real CRC Kids photo -->
+          <!-- <img src="assets/images/crc-kids.jpg" alt="CRC Kids Church"> -->
+          <div class="ministry-photo-icon">🌟</div>
+          <span>CRC Kids Photo</span>
+        </div>
+        <div class="ministry-copy">
+          <div class="card-badge badge-kids">CRC Kids</div>
+          <h2>A place where<br>kids encounter God.</h2>
+          <p>CRC Kids is a safe, joyful, and Spirit-filled environment where children from 2 to 12 years old can discover who God is in a way that makes sense to them. We believe the next generation is not the church of tomorrow — they are the church of today.</p>
+          <p>Every Sunday, our trained volunteers create an experience that's age-appropriate, Bible-based, and genuinely fun. Kids don't just learn about God — they experience Him.</p>
+          <ul class="ministry-features">
+            <li>Sunday services at 08:00 &amp; 10:00 — running parallel to the main service</li>
+            <li>Age-based classes from toddlers through to Grade 6</li>
+            <li>Safe check-in and check-out system for every child</li>
+            <li>Trained volunteers with a heart for the next generation</li>
+            <li>Bible-based curriculum with worship, teaching and activities</li>
+          </ul>
+          <a href="connect.html" class="btn btn-primary">Register Your Child →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- ── CRC YOUTH ────────────────────────────────────────────── -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div id="youth">
+  <span class="ministry-anchor"></span>
+  <div class="ministry-block" style="background: rgba(255,128,0,0.02);">
+    <div class="container">
+      <div class="ministry-layout reverse reveal">
+        <div class="ministry-photo">
+          <!-- [TBC] Replace with real CRC Youth photo -->
+          <!-- <img src="assets/images/crc-youth.jpg" alt="CRC Youth Ministry"> -->
+          <div class="ministry-photo-icon">🔥</div>
+          <span>CRC Youth Photo</span>
+        </div>
+        <div class="ministry-copy">
+          <div class="card-badge badge-youth">CRC Youth</div>
+          <h2>Real faith<br>for real life.</h2>
+          <p>CRC Youth is a space where teenagers can be completely themselves — the doubts, the questions, the pressure — and still encounter a God who is real. We don't want youth who just attend church. We want young people who are on fire, rooted in the Word, and ready to impact their generation.</p>
+          <p>Through powerful services, authentic community, and leaders who genuinely care, CRC Youth gives teenagers a place to belong and a reason to believe.</p>
+          <ul class="ministry-features">
+            <li>Junior Youth for Grade 5 to Grade 7 — bridging kids and main youth</li>
+            <li>Senior Youth for Grade 8 and up — real conversations, real God</li>
+            <li>Youth services with worship, teaching and community</li>
+            <li>Youth leaders who invest in every individual</li>
+            <li>Regular youth events, camps and gatherings</li>
+          </ul>
+          <!-- [TBC] Add youth service day/time when confirmed -->
+          <a href="connect.html" class="btn btn-primary" style="background:var(--orange); border-color:var(--orange);">Get Your Teen Connected →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- ── CRC WOMEN ────────────────────────────────════════════ -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div id="women">
+  <span class="ministry-anchor"></span>
+  <div class="ministry-block">
+    <div class="container">
+      <div class="ministry-layout reveal">
+        <div class="ministry-photo">
+          <!-- [TBC] Replace with real CRC Women photo -->
+          <!-- <img src="assets/images/crc-women.jpg" alt="CRC Women"> -->
+          <div class="ministry-photo-icon">🌸</div>
+          <span>CRC Women Photo</span>
+        </div>
+        <div class="ministry-copy">
+          <div class="card-badge badge-women">CRC Women</div>
+          <h2>Women who know<br>who they are.</h2>
+          <p>CRC Women is a community where women are celebrated, strengthened, and sent. Whether you're navigating motherhood, career, marriage, or simply the everyday demands of life — this is a space where you will find women who have walked that road and a God who walks it with you.</p>
+          <p>Through conferences, homecells, and community gatherings, CRC Women builds friendships that go deeper than Sunday and cultivates women who know their identity, their purpose, and their God.</p>
+          <ul class="ministry-features">
+            <li>Women's homecells for connection and discipleship</li>
+            <li>Annual conferences and special events</li>
+            <li>A Mothers Room available during services</li>
+            <li>Community built around real relationships</li>
+            <li>Teaching that is practical, powerful and grounded in the Word</li>
+          </ul>
+          <a href="connect.html" class="btn btn-primary" style="background:var(--purple); border-color:var(--purple);">Join CRC Women →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- ── CRC MUSIC ────────────────────────────────────────────── -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div id="music">
+  <span class="ministry-anchor"></span>
+  <div class="ministry-block" style="background: rgba(216,12,55,0.02);">
+    <div class="container">
+      <div class="ministry-layout reverse reveal">
+        <div class="ministry-photo">
+          <!-- [TBC] Replace with real CRC Music / worship photo -->
+          <!-- <img src="assets/images/crc-music.jpg" alt="CRC Music Worship"> -->
+          <div class="ministry-photo-icon">🎵</div>
+          <span>CRC Music Photo</span>
+        </div>
+        <div class="ministry-copy">
+          <div class="card-badge" style="background:rgba(216,12,55,0.12); color:var(--red);">CRC Music</div>
+          <h2>Worship that<br>moves people.</h2>
+          <p>Music at CRC Worcester is not a performance — it is a ministry. Our worship team exists to create an environment where the presence of God is tangible and where people encounter Him through sound, song, and surrender.</p>
+          <p>If you have a gift for music, vocals, sound, or media — we believe that gift was given to be used for the Kingdom. CRC Music is always looking for people who are passionate about worship and willing to serve with excellence.</p>
+          <ul class="ministry-features">
+            <li>Live worship at every Sunday service</li>
+            <li>A team of musicians, vocalists and creatives serving together</li>
+            <li>Sound, media and visual production behind every service</li>
+            <li>Regular rehearsals and team development</li>
+            <li>Open to anyone with a gift and a willing heart</li>
+          </ul>
+          <a href="connect.html" class="btn btn-primary">Join the Worship Team →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- ── CRC CARES ────────────────────────────────────────────── -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div id="cares">
+  <span class="ministry-anchor"></span>
+  <div class="ministry-block">
+    <div class="container">
+      <div class="ministry-layout reveal">
+        <div class="ministry-photo">
+          <!-- [TBC] Replace with real CRC Cares outreach photo -->
+          <!-- <img src="assets/images/crc-cares.jpg" alt="CRC Cares Community Outreach"> -->
+          <div class="ministry-photo-icon">💙</div>
+          <span>CRC Cares Photo</span>
+        </div>
+        <div class="ministry-copy">
+          <div class="card-badge badge-outreach">CRC Cares</div>
+          <h2>Love that<br>shows up.</h2>
+          <p>CRC Cares is where the mission of the church meets the streets of Worcester. We believe the church is not called to sit inside its walls — it is called to go out into the sea of humanity and serve with compassion, dignity, and the love of God.</p>
+          <p>Through community outreach projects, food drives, and hands-on service, CRC Cares puts love into action. Every initiative is an expression of our belief that people matter — not because of what they can do, but because of who God says they are.</p>
+          <ul class="ministry-features">
+            <li>Community outreach projects across Worcester</li>
+            <li>Food and essentials distribution for families in need</li>
+            <li>Volunteer opportunities open to every church member</li>
+            <li>Partnerships with local organisations serving the community</li>
+            <li>A heart for the marginalised, the forgotten, and the overlooked</li>
+          </ul>
+          <a href="connect.html" class="btn btn-primary" style="background:var(--blue); border-color:var(--blue);">Get Involved in Cares →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── GET INVOLVED ───────────────────────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="get-involved reveal">
+      <div>
+        <div class="section-label">Serve with us</div>
+        <h3>Every member<br>is a minister.</h3>
+        <p>CRC believes in training and releasing every person for ministry. You don't need a title to make a difference — you just need a willing heart. There's a team waiting for you.</p>
+        <a href="connect.html" class="btn btn-primary">Find Your Place →</a>
+      </div>
+      <div class="volunteer-cards">
+        <div class="volunteer-card">
+          <div class="volunteer-card-icon">🌟</div>
+          <h4>Kids Church</h4>
+          <p>Volunteer with the next generation</p>
+        </div>
+        <div class="volunteer-card">
+          <div class="volunteer-card-icon">🔥</div>
+          <h4>Youth</h4>
+          <p>Lead and invest in teenagers</p>
+        </div>
+        <div class="volunteer-card">
+          <div class="volunteer-card-icon">🎵</div>
+          <h4>Worship</h4>
+          <p>Serve on the music team</p>
+        </div>
+        <div class="volunteer-card">
+          <div class="volunteer-card-icon">💙</div>
+          <h4>Outreach</h4>
+          <p>Take love into the city</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONNECT CTA ────────────────────────────────────────────── -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="connect-banner reveal">
+      <div class="section-label" style="display:block; margin-bottom:16px;">Next Step</div>
+      <h2>Not sure where<br>you fit? Let's chat.</h2>
+      <p>You don't need to figure it out alone. Reach out and we'll help you find the right ministry, the right team, and the right community for where you are right now.</p>
+      <div class="connect-banner-btns">
+        <a href="connect.html" class="btn btn-primary">Get in Touch</a>
+        <a href="homecell.html" class="btn btn-outline">Join a Homecell →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+          <div class="nav-logo-badge">CRC</div>
+          <span style="font-family:var(--font-primary); font-weight:900; font-size:1rem;">CRC Worcester</span>
+        </div>
+        <p>Fuelled by the love of God.<br>Winning the lost at any cost.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-icon" aria-label="YouTube">YT</a>
+          <a href="#" class="social-icon" aria-label="Facebook">FB</a>
+          <a href="#" class="social-icon" aria-label="Instagram">IG</a>
+          <a href="#" class="social-icon" aria-label="Spotify">SP</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Navigate</div>
+        <ul class="footer-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="sermons.html">Sermons</a></li>
+          <li><a href="ministries.html">Ministries</a></li>
+          <li><a href="homecell.html">Homecell</a></li>
+          <li><a href="connect.html">Connect</a></li>
+          <li><a href="events.html">Events</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Ministries</div>
+        <ul class="footer-links">
+          <li><a href="#kids">CRC Kids</a></li>
+          <li><a href="#youth">CRC Youth</a></li>
+          <li><a href="#women">CRC Women</a></li>
+          <li><a href="#music">CRC Music</a></li>
+          <li><a href="#cares">CRC Cares</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Visit Us</div>
+        <ul class="footer-links">
+          <li><a>Sunday 08:00 &amp; 10:00</a></li>
+          <li><a>Wednesday 18:30</a></li>
+          <li><a>Worcester, Western Cape</a></li>
+          <li><a href="mailto:info@crcworcester.co.za">info@crcworcester.co.za</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 CRC Worcester. All rights reserved.</span>
+      <span style="color:rgba(255,255,255,0.15);">Built by AutoWeb Solutions</span>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="js/main.js"></script>
+
+</body>
+</html>

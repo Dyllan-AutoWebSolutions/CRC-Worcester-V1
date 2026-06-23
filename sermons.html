@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CRC Worcester Sermons — listen to the latest messages on Spotify. Growing in your faith doesn't stop on Sunday.">
+  <title>Sermons · CRC Worcester</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+
+  <style>
+    /* ── SERMONS PAGE SPECIFIC ───────────────────────────────── */
+
+    /* Featured sermon */
+    .featured-sermon {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .featured-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: stretch;
+      min-height: 420px;
+    }
+
+    .featured-info {
+      padding: 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featured-info::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 80% at 0% 50%, rgba(216,12,55,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .featured-info > * { position: relative; z-index: 1; }
+
+    .featured-series-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--red);
+      background: var(--red-light);
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      margin-bottom: 20px;
+      width: fit-content;
+    }
+
+    .featured-series-tag::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--red);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .featured-title {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .featured-meta {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 20px;
+    }
+
+    .featured-desc {
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.8;
+      margin-bottom: 32px;
+      max-width: 420px;
+    }
+
+    .featured-embed {
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 24px;
+      background: rgba(29,185,84,0.02);
+    }
+
+    .spotify-embed-wrap {
+      border-radius: 12px;
+      overflow: hidden;
+      background: #121212;
+      border: 1px solid rgba(29,185,84,0.15);
+    }
+
+    .spotify-embed-wrap iframe {
+      width: 100%;
+      display: block;
+      border: none;
+    }
+
+    .spotify-follow-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .spotify-follow-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .spotify-badge {
+      width: 40px; height: 40px;
+      background: #1DB954;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .spotify-badge svg { width: 20px; height: 20px; fill: #000; }
+
+    .spotify-follow-text h4 {
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: 0.88rem;
+      margin-bottom: 2px;
+    }
+
+    .spotify-follow-text p {
+      font-size: 0.76rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* Current series block */
+    .series-block {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 0;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .series-visual {
+      position: relative;
+      min-height: 300px;
+      background:
+        radial-gradient(ellipse 100% 100% at 50% 50%, rgba(216,12,55,0.35) 0%, rgba(161,21,156,0.2) 40%, transparent 70%),
+        linear-gradient(135deg, rgba(216,12,55,0.15), rgba(1,0,39,0.95));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 36px;
+      text-align: center;
+    }
+
+    .series-year {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: 5rem;
+      line-height: 1;
+      color: rgba(255,255,255,0.06);
+      letter-spacing: -0.04em;
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+    }
+
+    .series-title-visual {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      line-height: 1.1;
+      text-align: center;
+      letter-spacing: -0.02em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .series-title-visual span {
+      display: block;
+      color: var(--red);
+    }
+
+    .series-wave-line {
+      width: 40px; height: 2px;
+      background: var(--red);
+      margin: 16px auto;
+    }
+
+    .series-subtitle-visual {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      position: relative;
+      z-index: 1;
+    }
+
+    .series-info {
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-left: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .series-info p {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.85;
+      margin-bottom: 16px;
+    }
+
+    .series-info p:last-of-type { margin-bottom: 28px; }
+
+    /* Full show embed */
+    .show-embed-block {
+      background: rgba(29,185,84,0.04);
+      border: 1px solid rgba(29,185,84,0.12);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .show-embed-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+    }
+
+    .show-embed-info {
+      padding: 48px;
+      border-right: 1px solid rgba(29,185,84,0.1);
+    }
+
+    .show-embed-info h3 {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .show-embed-info p {
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+
+    .show-embed-player {
+      padding: 40px;
+    }
+
+    .show-embed-player .spotify-embed-wrap {
+      margin-bottom: 0;
+    }
+
+    /* Watch online placeholder */
+    .watch-placeholder {
+      background: rgba(255,255,255,0.02);
+      border: 1px dashed rgba(255,255,255,0.1);
+      border-radius: var(--radius-lg);
+      padding: 64px 48px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .watch-icon {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: rgba(255,0,0,0.1);
+      border: 1.5px solid rgba(255,0,0,0.2);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .watch-icon svg {
+      width: 28px; height: 28px;
+      fill: #FF0000;
+      opacity: 0.7;
+    }
+
+    .watch-placeholder h3 {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: 1.4rem;
+    }
+
+    .watch-placeholder p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.45);
+      max-width: 400px;
+      line-height: 1.75;
+    }
+
+    /* ── RESPONSIVE ──────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .featured-inner       { grid-template-columns: 1fr; min-height: auto; }
+      .featured-info        { padding: 36px 28px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+      .featured-embed       { padding: 28px; }
+      .series-block         { grid-template-columns: 1fr; }
+      .series-info          { padding: 36px 28px; border-left: none; border-top: 1px solid rgba(255,255,255,0.06); }
+      .show-embed-inner     { grid-template-columns: 1fr; }
+      .show-embed-info      { padding: 36px 28px; border-right: none; border-bottom: 1px solid rgba(29,185,84,0.1); }
+      .show-embed-player    { padding: 28px; }
+      .watch-placeholder    { padding: 48px 28px; }
+      .spotify-follow-row   { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 480px) {
+      .featured-title       { font-size: 1.5rem; }
+      .series-title-visual  { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────────────────────────── -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-badge">CRC</div>
+      CRC Worcester
+    </a>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="sermons.html" class="active">Sermons</a></li>
+      <li><a href="ministries.html">Ministries</a></li>
+      <li><a href="homecell.html">Homecell</a></li>
+      <li><a href="connect.html">Connect</a></li>
+    </ul>
+    <a href="connect.html" class="btn btn-primary" id="nav-cta" style="display:none;">Plan a Visit</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── MOBILE MENU ──────────────────────────────────────────── -->
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Navigation menu">
+  <a href="about.html"      onclick="closeMobileMenu()">About</a>
+  <a href="sermons.html"    onclick="closeMobileMenu()" class="active">Sermons</a>
+  <a href="ministries.html" onclick="closeMobileMenu()">Ministries</a>
+  <a href="homecell.html"   onclick="closeMobileMenu()">Homecell</a>
+  <a href="connect.html"    onclick="closeMobileMenu()">Connect</a>
+  <a href="connect.html"    onclick="closeMobileMenu()" class="cta-link">Plan a Visit →</a>
+</div>
+
+<!-- ── PAGE HERO ────────────────────────────────────────────── -->
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="container page-hero-content">
+    <div class="hero-eyebrow" style="animation: fadeUp 0.7s ease 0.1s both;">
+      Messages &amp; Teaching
+    </div>
+    <h1 class="section-title reveal" style="font-size:clamp(2.4rem,6vw,4.2rem); max-width:680px;">
+      Growing in faith<br>doesn't stop on <span style="color:var(--red);">Sunday.</span>
+    </h1>
+    <p class="section-sub reveal reveal-delay-1">
+      Every message is available on Spotify. Listen in the car, on a walk, at home — keep growing all week long.
+    </p>
+    <div class="reveal reveal-delay-2" style="display:flex; gap:16px; flex-wrap:wrap; margin-top:8px;">
+      <a href="https://open.spotify.com/show/YOUR_SHOW_ID" target="_blank" rel="noopener" class="btn btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+        </svg>
+        Follow on Spotify
+      </a>
+      <a href="#watch" class="btn btn-outline">Watch Online →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURED / LATEST SERMON ─────────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">Latest Message</div>
+    <h2 class="section-title" style="margin-bottom:32px;">This week's sermon.</h2>
+    <div class="featured-sermon reveal">
+      <div class="featured-inner">
+
+        <div class="featured-info">
+          <div class="featured-series-tag">Invasion 2026 · The Second Wave</div>
+          <!-- [TBC] Update sermon title, pastor name and date each week -->
+          <h3 class="featured-title">The Love That Invades Everything</h3>
+          <p class="featured-meta">Pastor [Name] &nbsp;·&nbsp; [Date]</p>
+          <p class="featured-desc">How does love change the way we see our city, our neighbours, and ourselves? This message unpacks what it means to carry a wave of love into every corner of our world.</p>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <!-- [TBC] Update episode URL each week -->
+            <a href="https://open.spotify.com/episode/YOUR_EPISODE_ID" target="_blank" rel="noopener" class="btn btn-primary">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+              </svg>
+              Listen on Spotify
+            </a>
+            <a href="homecell.html" class="btn btn-outline">Homecell Notes →</a>
+          </div>
+        </div>
+
+        <div class="featured-embed">
+          <div class="spotify-embed-wrap">
+            <!-- [TBC] Update embed src with current episode ID each week -->
+            <iframe
+              src="https://open.spotify.com/embed/episode/YOUR_EPISODE_ID?utm_source=generator&theme=0"
+              width="100%"
+              height="232"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+              title="Latest CRC Worcester Sermon">
+            </iframe>
+          </div>
+          <div class="spotify-follow-row">
+            <div class="spotify-follow-info">
+              <div class="spotify-badge">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+                </svg>
+              </div>
+              <div class="spotify-follow-text">
+                <h4>Never miss a message</h4>
+                <p>Follow our podcast on Spotify</p>
+              </div>
+            </div>
+            <!-- [TBC] Update with real Spotify show URL -->
+            <a href="https://open.spotify.com/show/YOUR_SHOW_ID" target="_blank" rel="noopener"
+              class="btn btn-outline" style="font-size:0.7rem; padding:10px 18px;">
+              Follow →
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CURRENT SERIES ─────────────────────────────────────────── -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-label">Current Series</div>
+    <h2 class="section-title" style="margin-bottom:32px;">What we're walking through.</h2>
+    <div class="series-block reveal">
+
+      <div class="series-visual">
+        <div class="series-title-visual">
+          Invasion<br><span>2026</span>
+        </div>
+        <div class="series-wave-line"></div>
+        <div class="series-subtitle-visual">The Second Wave</div>
+        <div class="series-year" aria-hidden="true">2026</div>
+      </div>
+
+      <div class="series-info">
+        <div class="featured-series-tag" style="margin-bottom:24px;">2026 Theme Series</div>
+        <h3 style="font-family:var(--font-primary); font-weight:900; font-size:1.6rem; line-height:1.2; margin-bottom:20px;">
+          A wave of love invading our world.
+        </h3>
+        <p>In 2016, the first wave of Invasion swept through CRC. A decade later, a new wave is building on the shoreline. Invasion 2026 — The Second Wave — is a call to carry a wave of love into every space we occupy: our families, our city, our workplaces, our world.</p>
+        <p>Based on John 13:34–35, this series unpacks what it looks like to love one another the way Jesus loved — not as a feeling, but as a force. A force that invades everything it touches and leaves nothing unchanged.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <a href="https://open.spotify.com/show/YOUR_SHOW_ID" target="_blank" rel="noopener" class="btn btn-primary">
+            Listen to the Series →
+          </a>
+          <a href="homecell.html" class="btn btn-outline">Homecell Resources</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── ALL SERMONS / PODCAST ─────────────────────────────────── -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-label">The Full Podcast</div>
+    <h2 class="section-title" style="margin-bottom:32px;">Every message. All in one place.</h2>
+    <div class="show-embed-block reveal">
+      <div class="show-embed-inner">
+
+        <div class="show-embed-info">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
+            <div class="spotify-badge">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+              </svg>
+            </div>
+            <span style="font-family:var(--font-primary); font-weight:800; font-size:0.9rem; color:#1DB954;">CRC Worcester on Spotify</span>
+          </div>
+          <h3>All our sermons,<br>on demand.</h3>
+          <p>Browse every message we've released — from the latest Sunday sermon to full series archives. Follow the podcast and Spotify will automatically add each new message to your library the moment it's published.</p>
+          <a href="https://open.spotify.com/show/YOUR_SHOW_ID" target="_blank" rel="noopener" class="btn btn-primary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+            </svg>
+            Open Podcast on Spotify
+          </a>
+        </div>
+
+        <div class="show-embed-player">
+          <div class="spotify-embed-wrap">
+            <!-- [TBC] Replace YOUR_SHOW_ID with the real Spotify show ID -->
+            <iframe
+              src="https://open.spotify.com/embed/show/YOUR_SHOW_ID?utm_source=generator&theme=0"
+              width="100%"
+              height="352"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+              title="CRC Worcester Sermons Podcast">
+            </iframe>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WATCH ONLINE ───────────────────────────────────────────── -->
+<section class="section" style="padding-top:0;" id="watch">
+  <div class="container">
+    <div class="section-label">Watch Online</div>
+    <h2 class="section-title" style="margin-bottom:32px;">Can't make it in person?</h2>
+    <div class="watch-placeholder reveal">
+      <div class="watch-icon">
+        <!-- YouTube play icon -->
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        </svg>
+      </div>
+      <h3>Live &amp; on-demand video coming soon.</h3>
+      <!-- [TBC] Replace with YouTube embed or livestream link when ready -->
+      <p>We're setting up live streaming and video replays for our Sunday services. In the meantime, all our messages are available in audio on Spotify.</p>
+      <a href="https://open.spotify.com/show/YOUR_SHOW_ID" target="_blank" rel="noopener" class="btn btn-primary">
+        Listen on Spotify Instead
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONNECT CTA ────────────────────────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="connect-banner reveal">
+      <div class="section-label" style="display:block; margin-bottom:16px;">Join Us</div>
+      <h2>Sermons are great.<br>Community is better.</h2>
+      <p>Listening online is a good start — but there's nothing like being in the room. Come and experience CRC Worcester for yourself this Sunday.</p>
+      <div class="connect-banner-btns">
+        <a href="connect.html" class="btn btn-primary">Plan a Visit</a>
+        <a href="homecell.html" class="btn btn-outline">Join a Homecell →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+          <div class="nav-logo-badge">CRC</div>
+          <span style="font-family:var(--font-primary); font-weight:900; font-size:1rem;">CRC Worcester</span>
+        </div>
+        <p>Fuelled by the love of God.<br>Winning the lost at any cost.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-icon" aria-label="YouTube">YT</a>
+          <a href="#" class="social-icon" aria-label="Facebook">FB</a>
+          <a href="#" class="social-icon" aria-label="Instagram">IG</a>
+          <a href="#" class="social-icon" aria-label="Spotify">SP</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Navigate</div>
+        <ul class="footer-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="sermons.html">Sermons</a></li>
+          <li><a href="ministries.html">Ministries</a></li>
+          <li><a href="homecell.html">Homecell</a></li>
+          <li><a href="connect.html">Connect</a></li>
+          <li><a href="events.html">Events</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Ministries</div>
+        <ul class="footer-links">
+          <li><a href="ministries.html#kids">CRC Kids</a></li>
+          <li><a href="ministries.html#youth">CRC Youth</a></li>
+          <li><a href="ministries.html#women">CRC Women</a></li>
+          <li><a href="ministries.html#music">CRC Music</a></li>
+          <li><a href="ministries.html#cares">CRC Cares</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Visit Us</div>
+        <ul class="footer-links">
+          <li><a>Sunday 08:00 &amp; 10:00</a></li>
+          <li><a>Wednesday 18:30</a></li>
+          <li><a>Worcester, Western Cape</a></li>
+          <li><a href="mailto:info@crcworcester.co.za">info@crcworcester.co.za</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 CRC Worcester. All rights reserved.</span>
+      <span style="color:rgba(255,255,255,0.15);">Built by AutoWeb Solutions</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ── SCRIPTS ────────────────────────────────────────────────── -->
+<script type="module" src="js/main.js"></script>
+
+</body>
+</html>

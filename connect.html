@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Plan a visit to CRC Worcester. Find our service times, location, and get in touch with us.">
+  <title>Connect · CRC Worcester</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+
+  <style>
+    /* ── CONNECT PAGE ────────────────────────────────────────── */
+
+    /* Plan a visit info grid */
+    .visit-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    /* Info cards */
+    .info-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .info-card-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .info-icon {
+      width: 52px; height: 52px;
+      border-radius: var(--radius-md);
+      background: var(--red-light);
+      border: 1px solid rgba(216,12,55,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .info-card-header h3 {
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: 1rem;
+    }
+
+    .info-card-header p {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.4);
+      margin-top: 2px;
+    }
+
+    .info-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      gap: 16px;
+    }
+
+    .info-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .info-row:first-child { padding-top: 0; }
+
+    .info-row-label {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      flex-shrink: 0;
+    }
+
+    .info-row-value {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-align: right;
+    }
+
+    /* What to expect section */
+    .expect-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 20px;
+    }
+
+    .expect-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+    }
+
+    .expect-num {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: 2.2rem;
+      line-height: 1;
+      color: var(--red);
+      opacity: 0.3;
+      margin-bottom: 16px;
+    }
+
+    .expect-card h3 {
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+
+    .expect-card p {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.7;
+    }
+
+    /* Map block */
+    .map-block {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .map-embed {
+      width: 100%;
+      height: 380px;
+      background: rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 16px;
+      color: rgba(255,255,255,0.25);
+      font-family: var(--font-primary);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* [TBC] Replace the placeholder div with a real Google Maps iframe */
+    .map-embed iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .map-pin-icon { font-size: 2.5rem; opacity: 0.3; }
+
+    .map-footer {
+      padding: 24px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .map-address {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.6;
+    }
+
+    .map-address strong {
+      display: block;
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: 0.92rem;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    /* Contact grid */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 20px;
+    }
+
+    .contact-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color var(--transition), background var(--transition);
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .contact-card:hover {
+      border-color: rgba(216,12,55,0.3);
+      background: rgba(216,12,55,0.05);
+    }
+
+    .contact-card-icon {
+      width: 48px; height: 48px;
+      border-radius: var(--radius-md);
+      background: var(--red-light);
+      border: 1px solid rgba(216,12,55,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .contact-card h3 {
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: 0.95rem;
+    }
+
+    .contact-card p {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .contact-card span {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 0.75rem;
+      color: var(--red);
+      letter-spacing: 0.08em;
+    }
+
+    /* Homecell CTA */
+    .homecell-cta {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-lg);
+      padding: 56px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .homecell-cta h3 {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .homecell-cta p {
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.8;
+      max-width: 500px;
+    }
+
+    /* ── RESPONSIVE ──────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .visit-grid    { grid-template-columns: 1fr; }
+      .expect-grid   { grid-template-columns: 1fr; }
+      .contact-grid  { grid-template-columns: 1fr; }
+      .homecell-cta  { grid-template-columns: 1fr; padding: 36px 28px; }
+      .map-embed     { height: 280px; }
+    }
+
+    @media (max-width: 480px) {
+      .map-footer    { flex-direction: column; align-items: flex-start; }
+      .expect-grid   { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────────────────────────── -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-badge">CRC</div>
+      CRC Worcester
+    </a>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="sermons.html">Sermons</a></li>
+      <li><a href="ministries.html">Ministries</a></li>
+      <li><a href="homecell.html">Homecell</a></li>
+      <li><a href="connect.html" class="active">Connect</a></li>
+    </ul>
+    <a href="connect.html" class="btn btn-primary" id="nav-cta" style="display:none;">Plan a Visit</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── MOBILE MENU ──────────────────────────────────────────── -->
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Navigation menu">
+  <a href="about.html"      onclick="closeMobileMenu()">About</a>
+  <a href="sermons.html"    onclick="closeMobileMenu()">Sermons</a>
+  <a href="ministries.html" onclick="closeMobileMenu()">Ministries</a>
+  <a href="homecell.html"   onclick="closeMobileMenu()">Homecell</a>
+  <a href="connect.html"    onclick="closeMobileMenu()" class="active">Connect</a>
+  <a href="connect.html"    onclick="closeMobileMenu()" class="cta-link">Plan a Visit →</a>
+</div>
+
+<!-- ── PAGE HERO ────────────────────────────────────────────── -->
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="container page-hero-content">
+    <div class="hero-eyebrow" style="animation: fadeUp 0.7s ease 0.1s both;">Plan a Visit</div>
+    <h1 class="section-title reveal" style="font-size:clamp(2.4rem,6vw,4.2rem); max-width:680px;">
+      Come as you are.<br>Leave knowing<br><span style="color:var(--red);">you belong.</span>
+    </h1>
+    <p class="section-sub reveal reveal-delay-1">
+      No dress code. No perfect life required. Just show up — we'll take care of the rest.
+    </p>
+  </div>
+</section>
+
+<!-- ── SERVICE TIMES & LOCATION ─────────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">When &amp; Where</div>
+    <h2 class="section-title" style="margin-bottom:40px;">We'd love to see you this Sunday.</h2>
+    <div class="visit-grid">
+
+      <!-- Service times -->
+      <div class="info-card reveal">
+        <div class="info-card-header">
+          <div class="info-icon">🕐</div>
+          <div>
+            <h3>Service Times</h3>
+            <p>Every week, no exceptions</p>
+          </div>
+        </div>
+        <div class="info-rows">
+          <div class="info-row">
+            <span class="info-row-label">Sunday Morning</span>
+            <span class="info-row-value">08:00</span>
+          </div>
+          <div class="info-row">
+            <span class="info-row-label">Sunday Morning</span>
+            <span class="info-row-value">10:00</span>
+          </div>
+          <div class="info-row">
+            <span class="info-row-label">Wednesday Evening</span>
+            <span class="info-row-value">18:30</span>
+          </div>
+          <div class="info-row">
+            <span class="info-row-label">Kids Church</span>
+            <span class="info-row-value">Both Sunday services</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Location -->
+      <div class="info-card reveal reveal-delay-1">
+        <div class="info-card-header">
+          <div class="info-icon">📍</div>
+          <div>
+            <h3>Our Location</h3>
+            <!-- [TBC] Update with confirmed address -->
+            <p>Worcester, Western Cape</p>
+          </div>
+        </div>
+        <div class="info-rows">
+          <!-- [TBC] Replace all address fields when confirmed -->
+          <div class="info-row">
+            <span class="info-row-label">Street</span>
+            <span class="info-row-value">[Street Address]</span>
+          </div>
+          <div class="info-row">
+            <span class="info-row-label">Area</span>
+            <span class="info-row-value">Worcester, 6850</span>
+          </div>
+          <div class="info-row">
+            <span class="info-row-label">Province</span>
+            <span class="info-row-value">Western Cape</span>
+          </div>
+          <div class="info-row">
+            <span class="info-row-label">Parking</span>
+            <span class="info-row-value">[TBC]</span>
+          </div>
+        </div>
+        <!-- [TBC] Update with real Google Maps link -->
+        <a href="https://maps.google.com" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top:4px;">
+          Get Directions →
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── WHAT TO EXPECT ────────────────────────────────────────── -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div style="text-align:center; margin-bottom:40px;" class="reveal">
+      <div class="section-label">First time?</div>
+      <h2 class="section-title">Here's what to expect.</h2>
+    </div>
+    <div class="expect-grid">
+      <div class="expect-card reveal">
+        <div class="expect-num">01</div>
+        <h3>Arrive &amp; be welcomed</h3>
+        <p>From the moment you pull into the parking lot, someone will be there to greet you. Our welcome team will point you in the right direction and make sure you feel at home before you even walk through the door.</p>
+      </div>
+      <div class="expect-card reveal reveal-delay-1">
+        <div class="expect-num">02</div>
+        <h3>Experience the service</h3>
+        <p>Expect powerful worship music, a relevant and practical message from the Bible, and a room full of people who are genuinely glad you're there. Services run approximately 75 to 90 minutes.</p>
+      </div>
+      <div class="expect-card reveal reveal-delay-2">
+        <div class="expect-num">03</div>
+        <h3>Kids are taken care of</h3>
+        <p>CRC Kids runs at both Sunday services. Drop your children off at the Kids entrance before the service begins — they'll be safe, cared for, and having the time of their lives while you focus on the message.</p>
+      </div>
+      <div class="expect-card reveal">
+        <div class="expect-num">04</div>
+        <h3>No pressure, just welcome</h3>
+        <p>You won't be asked to stand up, introduce yourself, or give money on your first visit. Come, experience, and take it at your own pace. We're just glad you showed up.</p>
+      </div>
+      <div class="expect-card reveal reveal-delay-1">
+        <div class="expect-num">05</div>
+        <h3>Connect afterwards</h3>
+        <p>After the service, grab a coffee and meet some of our team. If you have questions, want to find out more, or just need someone to talk to — we'll be around and we'd love to chat.</p>
+      </div>
+      <div class="expect-card reveal reveal-delay-2">
+        <div class="expect-num">06</div>
+        <h3>Take your next step</h3>
+        <p>When you're ready, the next step is simple — join a homecell, get connected to a ministry, or come back the following Sunday. There's no rush and no pressure. We'll be here.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MAP ────────────────────────────────────────────────────── -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="map-block reveal">
+      <div class="map-embed">
+        <!-- [TBC] Replace this div with a real Google Maps embed iframe -->
+        <!-- Example:
+        <iframe
+          src="https://www.google.com/maps/embed?pb=YOUR_EMBED_PARAMS"
+          width="100%"
+          height="380"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="CRC Worcester location">
+        </iframe>
+        -->
+        <div class="map-pin-icon">📍</div>
+        <span>Map coming — add Google Maps embed here</span>
+      </div>
+      <div class="map-footer">
+        <div class="map-address">
+          <!-- [TBC] Update with confirmed address -->
+          <strong>CRC Worcester</strong>
+          [Street Address], Worcester, 6850, Western Cape
+        </div>
+        <a href="https://maps.google.com" target="_blank" rel="noopener" class="btn btn-primary">
+          Open in Google Maps →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ────────────────────────────────────────────────── -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div style="margin-bottom:40px;" class="reveal">
+      <div class="section-label">Get in Touch</div>
+      <h2 class="section-title">We'd love to hear from you.</h2>
+    </div>
+    <div class="contact-grid">
+
+      <!-- Email -->
+      <a href="mailto:info@crcworcester.co.za" class="contact-card reveal">
+        <div class="contact-card-icon">✉️</div>
+        <h3>Email Us</h3>
+        <!-- [TBC] Update with confirmed email address -->
+        <p>Drop us a message and we'll get back to you as soon as we can.</p>
+        <span>info@crcworcester.co.za →</span>
+      </a>
+
+      <!-- WhatsApp -->
+      <!-- [TBC] Update WhatsApp number -->
+      <a href="https://wa.me/27000000000" target="_blank" rel="noopener" class="contact-card reveal reveal-delay-1">
+        <div class="contact-card-icon">💬</div>
+        <h3>WhatsApp Us</h3>
+        <p>Prefer to chat? Send us a message on WhatsApp — we're usually pretty quick.</p>
+        <span>Message us on WhatsApp →</span>
+      </a>
+
+      <!-- Social -->
+      <div class="contact-card reveal reveal-delay-2" style="cursor:default;">
+        <div class="contact-card-icon">📱</div>
+        <h3>Follow Along</h3>
+        <p>Stay up to date with everything happening at CRC Worcester on social media.</p>
+        <div style="display:flex; gap:8px; margin-top:4px;">
+          <!-- [TBC] Update with real social media links -->
+          <a href="#" class="social-icon" aria-label="Facebook" style="text-decoration:none;">FB</a>
+          <a href="#" class="social-icon" aria-label="Instagram" style="text-decoration:none;">IG</a>
+          <a href="#" class="social-icon" aria-label="YouTube" style="text-decoration:none;">YT</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── HOMECELL CTA ───────────────────────────────────────────── -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="homecell-cta reveal">
+      <div>
+        <div class="section-label">Go deeper</div>
+        <h3>Sunday is just the beginning.</h3>
+        <p>The real community at CRC Worcester happens in homecells — small groups that meet through the week to connect, study the Word, and do life together. If you're ready to go deeper, a homecell is your next step.</p>
+      </div>
+      <a href="homecell.html" class="btn btn-primary" style="white-space:nowrap; flex-shrink:0;">Join a Homecell →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+          <div class="nav-logo-badge">CRC</div>
+          <span style="font-family:var(--font-primary); font-weight:900; font-size:1rem;">CRC Worcester</span>
+        </div>
+        <p>Fuelled by the love of God.<br>Winning the lost at any cost.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-icon" aria-label="YouTube">YT</a>
+          <a href="#" class="social-icon" aria-label="Facebook">FB</a>
+          <a href="#" class="social-icon" aria-label="Instagram">IG</a>
+          <a href="#" class="social-icon" aria-label="Spotify">SP</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Navigate</div>
+        <ul class="footer-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="sermons.html">Sermons</a></li>
+          <li><a href="ministries.html">Ministries</a></li>
+          <li><a href="homecell.html">Homecell</a></li>
+          <li><a href="connect.html">Connect</a></li>
+          <li><a href="events.html">Events</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Ministries</div>
+        <ul class="footer-links">
+          <li><a href="ministries.html#kids">CRC Kids</a></li>
+          <li><a href="ministries.html#youth">CRC Youth</a></li>
+          <li><a href="ministries.html#women">CRC Women</a></li>
+          <li><a href="ministries.html#music">CRC Music</a></li>
+          <li><a href="ministries.html#cares">CRC Cares</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Visit Us</div>
+        <ul class="footer-links">
+          <li><a>Sunday 08:00 &amp; 10:00</a></li>
+          <li><a>Wednesday 18:30</a></li>
+          <li><a>Worcester, Western Cape</a></li>
+          <li><a href="mailto:info@crcworcester.co.za">info@crcworcester.co.za</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 CRC Worcester. All rights reserved.</span>
+      <span style="color:rgba(255,255,255,0.15);">Built by AutoWeb Solutions</span>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="js/main.js"></script>
+
+</body>
+</html>

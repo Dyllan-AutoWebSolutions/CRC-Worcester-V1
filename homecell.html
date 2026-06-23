@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CRC Worcester Homecell Resources — notes, worship setlist and sermon for this week's session.">
+  <title>Homecell Resources · CRC Worcester</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body class="homecell-bg">
+
+<!-- ── DECORATIVE WAVE LINES ─────────────────────────────── -->
+<div class="wave-strip" aria-hidden="true">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,60 Q120,20 240,60 Q360,100 480,60 Q600,20 720,60 Q840,100 960,60 Q1080,20 1200,60 Q1320,100 1440,60"
+      stroke="#D80C37" stroke-width="1.5" fill="none"/>
+    <path d="M0,75 Q120,35 240,75 Q360,115 480,75 Q600,35 720,75 Q840,115 960,75 Q1080,35 1200,75 Q1320,115 1440,75"
+      stroke="#A1159C" stroke-width="1" fill="none"/>
+    <path d="M0,90 Q120,50 240,90 Q360,130 480,90 Q600,50 720,90 Q840,130 960,90 Q1080,50 1200,90 Q1320,130 1440,90"
+      stroke="#5CB2ED" stroke-width="0.8" fill="none"/>
+  </svg>
+</div>
+
+<!-- ── NAV ─────────────────────────────────────────────────── -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-badge">CRC</div>
+      CRC Worcester
+    </a>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="sermons.html">Sermons</a></li>
+      <li><a href="ministries.html">Ministries</a></li>
+      <li><a href="homecell.html" class="active">Homecell</a></li>
+      <li><a href="connect.html">Connect</a></li>
+    </ul>
+    <a href="connect.html" class="btn btn-primary" id="nav-cta" style="display:none;">Plan a Visit</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── MOBILE MENU ──────────────────────────────────────────── -->
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Navigation menu">
+  <a href="about.html"      onclick="closeMobileMenu()">About</a>
+  <a href="sermons.html"    onclick="closeMobileMenu()">Sermons</a>
+  <a href="ministries.html" onclick="closeMobileMenu()">Ministries</a>
+  <a href="homecell.html"   onclick="closeMobileMenu()" class="active">Homecell</a>
+  <a href="connect.html"    onclick="closeMobileMenu()">Connect</a>
+  <a href="connect.html"    onclick="closeMobileMenu()" class="cta-link">Plan a Visit →</a>
+</div>
+
+<!-- ── HERO ─────────────────────────────────────────────────── -->
+<header class="homecell-hero" style="padding-top: 110px;">
+  <div class="homecell-eyebrow">Invasion 2026 · The Second Wave</div>
+  <h1 class="homecell-title">
+    Homecell
+    <span>Resources</span>
+  </h1>
+  <p class="homecell-sub">Everything you need for this week's session</p>
+</header>
+
+<!-- ── WAVE DIVIDER ─────────────────────────────────────────── -->
+<div class="wave-divider" aria-hidden="true">
+  <div class="wave-divider-line"></div>
+  <div class="wave-divider-dot"></div>
+  <div class="wave-divider-line"></div>
+</div>
+
+<!-- ── RESOURCE CARDS ───────────────────────────────────────── -->
+<main class="homecell-cards">
+
+  <!-- 1. HOMECELL NOTES -->
+  <div class="resource-card card-pdf">
+    <div class="rc-icon-area">
+      <div class="rc-icon rc-icon-pdf">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"
+            stroke="#D80C37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M14 2v6h6M9 13h6M9 17h4"
+            stroke="#D80C37" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="rc-icon-text">
+        <div class="rc-type">Week's Notes</div>
+        <div class="rc-title">Homecell Notes</div>
+      </div>
+    </div>
+    <div class="rc-body">
+      <div class="rc-tag">
+        <span class="rc-tag-dot"></span>PDF Document
+      </div>
+      <p class="rc-desc">This week's discussion guide — read through before your group meets, or follow along during your session.</p>
+      <div class="btn-group">
+        <a href="assets/docs/HOME CELL NOTES_17 May 2026.pdf" target="_blank" class="btn btn-red">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" aria-hidden="true">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+          View Notes
+        </a>
+        <a href="assets/docs/HOME CELL NOTES_17 May 2026.pdf" download class="btn btn-dim">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Download
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. SETLIST VIDEO -->
+  <div class="resource-card card-video">
+    <div class="rc-icon-area">
+      <div class="rc-icon rc-icon-video">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="2" y="5" width="15" height="14" rx="2" stroke="#A1159C" stroke-width="2"/>
+          <path d="M17 9l5-3v12l-5-3V9z" stroke="#A1159C" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="rc-icon-text">
+        <div class="rc-type">Worship</div>
+        <div class="rc-title">Setlist Video</div>
+      </div>
+    </div>
+    <div class="rc-body">
+      <div class="rc-tag" style="border-color:rgba(161,21,156,0.3);">
+        <span class="rc-tag-dot" style="background:var(--purple);"></span>Video File
+      </div>
+      <p class="rc-desc">This week's worship setlist — watch together as a group or use it to practise the songs beforehand.</p>
+      <div class="btn-group">
+        <a href="https://drive.google.com/file/d/1Wvdxc4ikeDqUaWrcZo3MX4L67BKTurYs/view?usp=sharing"
+          target="_blank" rel="noopener" class="btn btn-purple">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13" aria-hidden="true">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+          </svg>
+          Watch Setlist
+        </a>
+        <a href="https://drive.google.com/file/d/1Wvdxc4ikeDqUaWrcZo3MX4L67BKTurYs/view?usp=sharing"
+          target="_blank" rel="noopener" class="btn btn-dim">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Open in Drive
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. SERMON ON SPOTIFY -->
+  <div class="resource-card card-spotify">
+    <div class="rc-icon-area">
+      <div class="rc-icon rc-icon-spotify">
+        <svg viewBox="0 0 24 24" fill="#1DB954" aria-hidden="true">
+          <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+        </svg>
+      </div>
+      <div class="rc-icon-text">
+        <div class="rc-type">This Week's Sermon</div>
+        <div class="rc-title">Listen on Spotify</div>
+      </div>
+    </div>
+    <div class="rc-body">
+      <div class="rc-tag" style="border-color:rgba(29,185,84,0.3);">
+        <span class="rc-tag-dot" style="background:#1DB954;"></span>Podcast Episode
+      </div>
+      <p class="rc-desc">Catch up on the sermon this week's notes are based on — listen before or after your group meets.</p>
+      <div class="btn-group">
+        <a href="https://open.spotify.com/episode/0pN0a1vCMRaN1v9fSolZUL?si=c5c0993af04f494b"
+          target="_blank" rel="noopener" class="btn btn-spotify">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13" aria-hidden="true">
+            <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+          </svg>
+          Open in Spotify
+        </a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────── -->
+<footer class="footer" style="position:relative; z-index:1;">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+          <div class="nav-logo-badge">CRC</div>
+          <span style="font-family:var(--font-primary); font-weight:900; font-size:1rem;">CRC Worcester</span>
+        </div>
+        <p>Fuelled by the love of God.<br>Winning the lost at any cost.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-icon" aria-label="YouTube">YT</a>
+          <a href="#" class="social-icon" aria-label="Facebook">FB</a>
+          <a href="#" class="social-icon" aria-label="Instagram">IG</a>
+          <a href="#" class="social-icon" aria-label="Spotify">SP</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Navigate</div>
+        <ul class="footer-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="sermons.html">Sermons</a></li>
+          <li><a href="ministries.html">Ministries</a></li>
+          <li><a href="homecell.html">Homecell</a></li>
+          <li><a href="connect.html">Connect</a></li>
+          <li><a href="events.html">Events</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Ministries</div>
+        <ul class="footer-links">
+          <li><a href="ministries.html#kids">CRC Kids</a></li>
+          <li><a href="ministries.html#youth">CRC Youth</a></li>
+          <li><a href="ministries.html#women">CRC Women</a></li>
+          <li><a href="ministries.html#music">CRC Music</a></li>
+          <li><a href="ministries.html#cares">CRC Cares</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Visit Us</div>
+        <ul class="footer-links">
+          <li><a>Sunday 08:00 & 10:00</a></li>
+          <li><a>Wednesday 18:30</a></li>
+          <li><a>Worcester, Western Cape</a></li>
+          <li><a href="mailto:info@crcworcester.co.za">info@crcworcester.co.za</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 CRC Worcester. All rights reserved.</span>
+      <span style="color:rgba(255,255,255,0.15);">Built by AutoWeb Solutions</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ── SCRIPTS ─────────────────────────────────────────────────── -->
+<script type="module" src="js/main.js"></script>
+
+</body>
+</html>
